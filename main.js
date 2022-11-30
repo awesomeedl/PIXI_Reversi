@@ -55,7 +55,6 @@ function onClick(event) {
     }
 }
 
-turn = 1;
 Redraw(pieces);
 
 

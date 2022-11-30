@@ -26,17 +26,17 @@ class Grid {
     }
 
     makeMove(x, y) {
-        let test = this.getAffectedSquares(this.turn, x, y);
+        let test = this.getAffectedSquares(x, y);
 
-        if(test == 0) {
+        if(test.length === 0) {
             return false;
         }
         else
         {
-            this.grid[test.y][test.x] = this.turn;
-            for(let affected in test) {
-                this.grid[affected.y][affected.x] = this.turn;
-            }
+            this.grid[y][x] = this.turn;
+            test.forEach((a) => {
+                this.grid[a.y][a.x] = this.turn;
+            });
             this.turn = this.turn === 1 ? 2 : 1;
             return true;
         }
@@ -56,20 +56,20 @@ class Grid {
         return moves;
     }
 
-    getAffectedSquares(turn, x, y) {
+    getAffectedSquares(x, y) {
         let affected = [];
-        let opponent = turn === 1 ? 2 : 1;
+        let opponent = this.turn === 1 ? 2 : 1;
     
         for (let dir of directionVectors) {
             let potential = [];
             let itor = { x: x + dir.x, y: y + dir.y };
     
-            while(this.getPiece(grid, itor.x, itor.y) === opponent) {
+            while(this.getPiece(itor.x, itor.y) === opponent) {
                 potential.push({x: itor.x, y: itor.y});
                 itor = { x: itor.x + dir.x, y: itor.y + dir.y };
             }
     
-            if(this.getPiece(itor.x, itor.y) === turn) {
+            if(this.getPiece(itor.x, itor.y) === this.turn) {
                 affected.push(...potential);
             }
         }
