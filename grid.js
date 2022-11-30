@@ -1,3 +1,14 @@
+const directionVectors = [
+    { x: 1, y: 0 }, // Right
+    { x: 1, y: 1 }, // Up right
+    { x: 0, y: 1 }, // Up
+    { x: -1, y: 1 }, // Up left
+    { x: -1, y: 0 }, // Left
+    { x: -1, y: -1 }, // Down left
+    { x: 0, y: -1 }, // Down
+    { x: 1, y: -1 } // Down right
+]
+
 class Grid {
     constructor() {
         this.grid = [
@@ -14,9 +25,64 @@ class Grid {
         this.turn = 1;
     }
 
-    getNextPossibleMoves() {
-        
+    makeMove(x, y) {
+        let test = this.getAffectedSquares(this.turn, x, y);
+
+        if(test == 0) {
+            return false;
+        }
+        else
+        {
+            this.grid[test.y][test.x] = this.turn;
+            for(let affected in test) {
+                this.grid[affected.y][affected.x] = this.turn;
+            }
+            this.turn = this.turn === 1 ? 2 : 1;
+            return true;
+        }
     }
 
+    getNextPossibleMoves() {
+        let moves = [];
+
+        for(let y = 0; y < grid.length; y++) {
+            for (let x = 0; x < grid.length; x++) {
+                if(this.getAffectedSquares(this.turn, x, y) > 0 ) {
+                    moves.push({x: x, y: y})
+                }
+            }
+        }
+
+        return moves;
+    }
+
+    getAffectedSquares(turn, x, y) {
+        let affected = [];
+        let opponent = turn === 1 ? 2 : 1;
+    
+        for (let dir of directionVectors) {
+            let potential = [];
+            let itor = { x: x + dir.x, y: y + dir.y };
+    
+            while(this.getPiece(grid, itor.x, itor.y) === opponent) {
+                potential.push({x: itor.x, y: itor.y});
+                itor = { x: itor.x + dir.x, y: itor.y + dir.y };
+            }
+    
+            if(this.getPiece(itor.x, itor.y) === turn) {
+                affected.push(...potential);
+            }
+        }
+    
+        return affected;
+    }
+
+    isWithinBounds(x, y) {
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
+    }
+    
+    getPiece(x, y) {
+        return this.isWithinBounds(x, y) ? this.grid[y][x] : -1;
+    }
 
 }
