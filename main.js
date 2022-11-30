@@ -12,7 +12,7 @@ app.stage.interactive = true;
 app.stage.hitArea = app.screen;
 app.stage.on('pointerdown', onClick);
 
-// Draw the grid
+// Draw the background
 for (let i = 0; i <= width; i += cellWidth) {
     background.lineStyle(1, 0xffffff, 1, 1)
         .moveTo(i, 0)
@@ -23,19 +23,19 @@ for (let i = 0; i <= width; i += cellWidth) {
 
 background.endFill();
 
-let g = new Grid();
+let grid = new Grid();
 
 function Redraw(pieces) {
     pieces.clear();
 
-    for (let y = 0; y < g.grid.length; y++) {
-        for (let x = 0; x < g.grid[y].length; x++) {
-            if (g.grid[y][x] === 1) { // White
+    for (let y = 0; y < Grid.size; y++) {
+        for (let x = 0; x < Grid.size; x++) {
+            if (grid.getPiece(x, y) === 1) { // White
                 pieces
                     .beginFill(0xffffff)
                     .drawCircle((x + 0.5) * cellWidth, (y + 0.5) * cellWidth, cellWidth * 0.4, cellWidth * 0.4)
             }
-            else if (g.grid[y][x] === 2) {
+            else if (grid.getPiece(x, y) === 2) {
                 pieces
                     .beginFill(0x000000)
                     .drawCircle((x + 0.5) * cellWidth, (y + 0.5) * cellWidth, cellWidth * 0.4, cellWidth * 0.4)
@@ -50,7 +50,7 @@ function onClick(event) {
     let x = Math.floor(event.data.global.x / cellWidth);
     let y = Math.floor(event.data.global.y / cellWidth);
 
-    if(g.makeMove(x, y)) {
+    if(grid.makeMove(x, y)) {
         Redraw(pieces);
     }
 }

@@ -10,20 +10,20 @@ const directionVectors = [
 ]
 
 class Grid {
-    constructor() {
-        this.grid = [
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 1, 2, 0, 0, 0],
-            [0, 0, 0, 2, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+    static size = 8;
 
-        this.turn = 1;
-    }
+    turn = 1;
+
+    #grid = [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 2, 0, 0, 0],
+        [0, 0, 0, 2, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ];
 
     makeMove(x, y) {
         let test = this.getAffectedSquares(x, y);
@@ -56,7 +56,7 @@ class Grid {
         return moves;
     }
 
-    getAffectedSquares(x, y) {
+    #getAffectedSquares(x, y) {
         let affected = [];
         let opponent = this.turn === 1 ? 2 : 1;
     
@@ -77,7 +77,7 @@ class Grid {
         return affected;
     }
 
-    isWithinBounds(x, y) {
+    static isWithinBounds(x, y) {
         return x >= 0 && x < 8 && y >= 0 && y < 8;
     }
     
