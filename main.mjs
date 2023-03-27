@@ -1,5 +1,5 @@
 import { Application, Graphics } from "./pixi.mjs"
-import { Grid } from "./grid.mjs"
+import { Grid } from "./reversi.mjs"
 
 let cellWidth = 100;
 let height = cellWidth * 8;
@@ -12,9 +12,9 @@ let background = new Graphics();
 let pieces = new Graphics();
 app.stage.addChild(background);
 app.stage.addChild(pieces);
-app.stage.interactive = true;
+app.stage.eventMode = 'static';
 app.stage.hitArea = app.screen;
-app.stage.on('pointerdown', onClick);
+app.stage.onclick = Clicked;
 
 // Draw the background
 for (let i = 0; i <= width; i += cellWidth) {
@@ -29,6 +29,9 @@ background.endFill();
 
 let grid = new Grid();
 
+/**
+ * @param {Graphics} pieces 
+ */
 function Redraw(pieces) {
     pieces.clear();
 
@@ -50,7 +53,7 @@ function Redraw(pieces) {
     pieces.endFill();
 }
 
-function onClick(event) {
+function Clicked(event) {
     let x = Math.floor(event.data.global.x / cellWidth);
     let y = Math.floor(event.data.global.y / cellWidth);
 
