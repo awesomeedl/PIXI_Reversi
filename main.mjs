@@ -1,11 +1,15 @@
-let cellWidth = 100;
-let height = width = cellWidth * 8;
+import { Application, Graphics } from "./pixi.mjs"
+import { Grid } from "./grid.mjs"
 
-let app = new PIXI.Application({ width: width, height: height, backgroundColor: 0x123b26 });
+let cellWidth = 100;
+let height = cellWidth * 8;
+let width = cellWidth * 8;
+
+let app = new Application({ width: width, height: height, backgroundColor: 0x123b26 });
 document.body.appendChild(app.view);
 
-let background = new PIXI.Graphics();
-let pieces = new PIXI.Graphics();
+let background = new Graphics();
+let pieces = new Graphics();
 app.stage.addChild(background);
 app.stage.addChild(pieces);
 app.stage.interactive = true;

@@ -12,19 +12,33 @@ const directionVectors = [
 class Grid {
     static size = 8;
 
-    turn = 1;
+    constructor() {
+        /**
+         * @type {Number}
+         */
+        this.turn = 1
 
-    #grid = [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 2, 0, 0, 0],
-        [0, 0, 0, 2, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0]
-    ];
+        /**
+         * @type {Number[][]}
+         */
+        this.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 2, 0, 0, 0],
+            [0, 0, 0, 2, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+    }   
 
+    /**
+     * 
+     * @param {Number} x 
+     * @param {Number} y 
+     * @returns {Boolean}
+     */
     makeMove(x, y) {
         let test = this.getAffectedSquares(x, y);
 
@@ -56,7 +70,7 @@ class Grid {
         return moves;
     }
 
-    #getAffectedSquares(x, y) {
+    getAffectedSquares(x, y) {
         let affected = [];
         let opponent = this.turn === 1 ? 2 : 1;
     
@@ -77,7 +91,7 @@ class Grid {
         return affected;
     }
 
-    static isWithinBounds(x, y) {
+    isWithinBounds(x, y) {
         return x >= 0 && x < 8 && y >= 0 && y < 8;
     }
     
@@ -86,3 +100,5 @@ class Grid {
     }
 
 }
+
+export { Grid, directionVectors }
